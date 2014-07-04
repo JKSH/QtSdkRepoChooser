@@ -14,4 +14,4 @@ meantime though, I hope this tool is useful for you to get started with Qt.
 
 USAGE
 -----
-See Qt SDK Repo Chooser.pdf
+See [Qt SDK Repo Chooser.pdf](https://github.com/JKSH/QtSdkRepoChooser/releases/download/v0.9.0/Qt.SDK.Repo.Chooser.pdf)
