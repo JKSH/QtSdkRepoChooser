@@ -172,7 +172,7 @@ Downloader::getFilesFromIndex(const QString& rootUrl, const QString& relPath, co
 
 			connect(fileReply, ( void (QNetworkReply::*)(QNetworkReply::NetworkError) )&QNetworkReply::error, [=]
 			{
-				qDebug() << "\tERROR:" << indexReply->errorString();
+				qDebug() << "\tERROR:" << fileReply->errorString();
 			});
 		}
 	});
