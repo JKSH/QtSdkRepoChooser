@@ -48,3 +48,9 @@ repository manually.
 
 7. Follow steps #6 - #9 in UserManual.pdf. The folder that contains Updates.xml
    is your User Defined Repository.
+
+
+Acknowledgements
+----------------
+I would like to thank [Samuel Gaist](http://qt-project.org/mebmer/39728) for
+providing the prebuilt Mac OS X binaries.
