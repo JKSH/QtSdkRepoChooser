@@ -20,7 +20,7 @@ Downloader::loadMirrors()
 
 	// ASSUMPTION: All mirrors host packages for all architectures
 	// ASSUMPTION: Updates.xml is the core file
-	QNetworkRequest req(QUrl("http://download.qt-project.org/online/qtsdkrepository/windows_x86/root/qt/Updates.xml.mirrorlist"));
+	QNetworkRequest req(QUrl("http://download.qt.io/online/qtsdkrepository/windows_x86/root/qt/Updates.xml.mirrorlist"));
 	auto reply = nam->get(req);
 	connect(reply, &QNetworkReply::finished, [=]
 	{
