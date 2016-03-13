@@ -1,0 +1,89 @@
+<html>
+	<head>
+		<title>
+			User Manual: Qt SDK Repo Chooser
+		</title>
+	</head>
+	<body>
+		<h1>
+			Qt SDK Repo Chooser
+		</h1>
+		<p>
+			If you are using the online <a href="http://www.qt.io/download-open-source/">Qt 5 SDK</a>
+			but downloads are slow and/or you frequently get disconnected, this tool might help.
+			You might have been assigned a mirror that is performing poorly. The Qt SDK Repo
+			Chooser helps you select a non-default mirror, which might give you a better download
+			experience.
+		</p>
+		<p>
+			Ideally, the causes of this issue should be solved upstream. Please add your thoughts,
+			ideas, and votes to the reports at <a href="https://bugreports.qt.io/browse/QTIFW-5">QTIFW-5</a>
+			and <a href="https://bugreports.qt.io/browse/QTIFW-441">QTIFW-441</a>. In the meantime
+			though, I hope this tool is useful for you to get started with Qt.
+		</p>
+
+		<h2>
+			Usage Instructions
+		</h2>
+		<ol>
+			<li>
+				Go to <a href="http://www.qt.io/download-open-source/">http://www.qt.io/download-open-source/</a>
+				and click "<b>View All Downloads</b>".
+				<p><img src="1_view.png"/></p>
+			</li>
+			<li>
+				Choose a random file and click "<b>(Info)</b>". At this stage, it doesn't matter
+				which file you choose; we simply want to check the servers' download speeds.
+				<p><img src="2_info.png"/></p>
+			</li>
+			<li>
+				Choose a mirror and download the file. Keep an eye on your download speed for about
+				15 seconds. If you are satisfied with the download speed, cancel the download and
+				go to step #4. Otherwise, try another mirror.
+				<p><img src="3_mirror.png"/></p>
+			</li>
+			<li>
+				<p>Download and extract the <a href="https://github.com/JKSH/QtSdkRepoChooser/releases">Qt
+				SDK Repo Chooser</a>. Launch the <b>QtSdkRepoChooser</b> executable.</p>
+			</li>
+			<li>
+				Select the good mirror that you found in step #3, and click "<b>Use Mirror</b>".
+				<p><img src="5_use.png"/></p>
+			</li>
+			<li>
+				When the Local Repo URL appears, copy it (Ctrl+C on Windows/Linux, Cmd+C on OS X).
+				<p><img src="6_copy.png"/></p>
+			</li>
+			<li>
+				Launch your online Qt installer. After you log into your Qt Account (or skip the
+				login), click "<b>Settings</b>".
+				<p><img src="7_settings.png"/></p>
+			</li>
+			<li>
+				<p>Under the "Repositories" tab, deselect "<b>Qt <platform> online root
+				repository</b>". (Note: If you already have an existing installation, there will be
+				other repositories listed. Don't deselect these)</p>
+			</li>
+			<li>
+				<b>Add</b> a User Defined Repository. Paste the URL from step #6.
+				<p><img src="9_final.png"/></p>
+			</li>
+			<li>
+				Download Qt. Happy coding!
+			</li>
+		</ol>
+		<p>
+			<b>IMPORTANT!</b>: When a new version of Qt is released, you will need to re-run steps
+			#5 and #6 in the Qt SDK Repo Chooser to update your local repo with details of the new
+			packages.
+		</p>
+
+		<h2>
+			Alternative Instructions
+		</h2>
+		<p>
+			If you can't use this tool for whatever reason, see README.md in the project root
+			folder for an alternative way to choose your repo.
+		</p>
+	</body>
+</html>
