@@ -17,8 +17,6 @@ Gui::Gui(QWidget* parent)
 	logWidget = textEdit;
 	qInstallMessageHandler(&printMessage);
 
-	// NOTE: While this should be supported by MSVC 2013, it is currently suppressed by Qt:
-	//       https://bugreports.qt-project.org/browse/QTBUG-39142
 	comboBox_os->addItems({
 			"linux_x64",
 			"linux_x86",
