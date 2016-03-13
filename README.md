@@ -14,7 +14,8 @@ meantime though, I hope this tool is useful for you to get started with Qt.
 
 Instructions
 ------------
-See [UserManual.pdf](https://github.com/JKSH/QtSdkRepoChooser/blob/master/UserManual.pdf)
+See [doc/index.html]
+(http://htmlpreview.github.io/?https://github.com/JKSH/QtSdkRepoChooser/blob/master/doc/index.html).
 
 
 Alternative Instructions
@@ -31,8 +32,8 @@ repository manually.
         - "mac_x64"
         - "windows_x86"
 
-2. Follow steps #1 and #2 in [UserManual.pdf]
-   (https://github.com/JKSH/QtSdkRepoChooser/blob/master/UserManual.pdf)
+2. Follow steps #1 - #3 in [doc/index.html]
+   (http://htmlpreview.github.io/?https://github.com/JKSH/QtSdkRepoChooser/blob/master/doc/index.html).
 
 3. See the URL of the online installer from the mirror. It should be in this form:
     - {base_path}/official_releases/online_installers/{installer_executable}
@@ -46,7 +47,7 @@ repository manually.
 
 6. Save Updates.xml.
 
-7. Follow steps #6 - #9 in UserManual.pdf. The folder that contains Updates.xml
+7. Follow steps #7 - #10 in doc/index.html. The folder that contains Updates.xml
    is your User Defined Repository.
 
 
