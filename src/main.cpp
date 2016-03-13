@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 
 		// ASSUMPTION: rootUrl ends with '/'
 		QString contents = updateFile.readAll();
-		contents.replace("http://download.qt-project.org/", rootUrl);
+		contents.replace("http://download.qt.io/", rootUrl);
 		updateFile.resize(0);
 		updateFile.write(contents.toUtf8());
 		updateFile.close();
