@@ -29,7 +29,18 @@ Downloader::loadMirrors()
 		if (reply->error() != QNetworkReply::NoError)
 			return;
 
-        QStringList tmp = page.split("mirrors in other countries, but same continent");
+        QStringList tmp;
+        if page.contains("mirrors in other countries, but same continent")
+        {
+            //Handles continental servers if existing
+            tmp = page.split("mirrors in other countries, but same continent");
+        }
+        else
+        {
+            //Handles worldwide servers if no continental server was found
+            tmp = page.split("mirrors in other parts of the world");
+        }
+
 		if (tmp.size() < 2)
 		{
 			qDebug() << "\tERROR: Malformed file:\n" << page;
