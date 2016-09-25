@@ -29,17 +29,17 @@ Downloader::loadMirrors()
 		if (reply->error() != QNetworkReply::NoError)
 			return;
 
-        QStringList tmp;
-        if(page.contains("mirrors in other countries, but same continent"))
-        {
-            //Handles continental servers if existing
-            tmp = page.split("mirrors in other countries, but same continent");
-        }
-        else
-        {
-            //Handles worldwide servers if no continental server was found
-            tmp = page.split("mirrors in other parts of the world");
-        }
+		QStringList tmp;
+		if (page.contains("mirrors in other countries, but same continent"))
+		{
+			// Handles continental servers if existing
+			tmp = page.split("mirrors in other countries, but same continent");
+		}
+		else
+		{
+			// Handles worldwide servers if no continental server was found
+			tmp = page.split("mirrors in other parts of the world");
+		}
 
 		if (tmp.size() < 2)
 		{
@@ -48,7 +48,7 @@ Downloader::loadMirrors()
 		}
 
 		// ASSUMPTION: After the heading "Found N mirrors in other parts of the world", only
-		//             the mirrored file URLs are in a list
+        //             the mirrored file URLs are in a list
 		QStringList mirrors = tmp[1].split("<li><a href=\"");
 		mirrors.removeFirst();
 
