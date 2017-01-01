@@ -30,7 +30,12 @@ Downloader::loadMirrors()
 			return;
 
 		QStringList tmp;
-		if (page.contains("mirrors in other countries, but same continent"))
+		if (page.contains("mirrors which handle this country"))
+		{
+			// Handle countrywide servers if exists
+			tmp = page.split("mirrors which handle this country");
+		}
+		else if (page.contains("mirrors in other countries, but same continent"))
 		{
 			// Handles continental servers if existing
 			tmp = page.split("mirrors in other countries, but same continent");
