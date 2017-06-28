@@ -1,4 +1,4 @@
-// Copyright (c) 2014 Sze Howe Koh
+// Copyright (c) 2017 Sze Howe Koh
 // This code is licensed under the MIT license (see LICENSE.MIT for details)
 
 #include "downloader.h"
@@ -29,21 +29,22 @@ Downloader::loadMirrors()
 		if (reply->error() != QNetworkReply::NoError)
 			return;
 
+		const QStringList mirrorGroups
+		{
+			"mirrors which handle this country", // Country-wide group
+			"mirrors in other countries, but same continent", // Continent-wide group
+			"mirrors in other parts of the world" // Everywhere else
+		};
+
 		QStringList tmp;
-		if (page.contains("mirrors which handle this country"))
+		for (const QString& group : mirrorGroups)
 		{
-			// Handles countrywide servers if any exist
-			tmp = page.split("mirrors which handle this country");
-		}
-		else if (page.contains("mirrors in other countries, but same continent"))
-		{
-			// Handles continental servers if existing
-			tmp = page.split("mirrors in other countries, but same continent");
-		}
-		else
-		{
-			// Handles worldwide servers if no continental server was found
-			tmp = page.split("mirrors in other parts of the world");
+			if (page.contains(group))
+			{
+				// Found the closest group. Stop looking.
+				tmp = page.split(group);
+				break;
+			}
 		}
 
 		if (tmp.size() < 2)
@@ -53,7 +54,7 @@ Downloader::loadMirrors()
 		}
 
 		// ASSUMPTION: After the heading "Found N mirrors in other parts of the world", only
-        //             the mirrored file URLs are in a list
+		//             the mirrored file URLs are in a list
 		QStringList mirrors = tmp[1].split("<li><a href=\"");
 		mirrors.removeFirst();
 
