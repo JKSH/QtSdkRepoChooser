@@ -52,4 +52,4 @@ repository manually.
 Acknowledgements
 ----------------
 I would like to thank [Samuel Gaist](http://forum.qt.io/user/sgaist) for
-providing the prebuilt Mac OS X binaries.
+providing the prebuilt macOS binaries.
