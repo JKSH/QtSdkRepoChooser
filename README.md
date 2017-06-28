@@ -14,8 +14,7 @@ meantime though, I hope this tool is useful for you to get started with Qt.
 
 Instructions
 ------------
-See [doc/index.html]
-(http://htmlpreview.github.io/?https://github.com/JKSH/QtSdkRepoChooser/blob/master/doc/index.html).
+See [doc/index.html](http://htmlpreview.github.io/?https://github.com/JKSH/QtSdkRepoChooser/blob/master/doc/index.html).
 
 
 Alternative Instructions
@@ -32,8 +31,7 @@ repository manually.
         - "mac_x64"
         - "windows_x86"
 
-2. Follow steps #1 - #3 in [doc/index.html]
-   (http://htmlpreview.github.io/?https://github.com/JKSH/QtSdkRepoChooser/blob/master/doc/index.html).
+2. Follow steps #1 - #3 in [doc/index.html](http://htmlpreview.github.io/?https://github.com/JKSH/QtSdkRepoChooser/blob/master/doc/index.html).
 
 3. See the URL of the online installer from the mirror. It should be in this form:
     - {base_path}/official_releases/online_installers/{installer_executable}
