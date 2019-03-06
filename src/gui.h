@@ -19,6 +19,7 @@ public slots:
 
 signals:
 	void mirrorSelected(const QString& sdkArch, const QString& mirrorDomain) const;
+	void mirrorTestReq(const QString& sdkArch, const QString& mirrorDomain) const;
 };
 
 #endif // GUI_H
