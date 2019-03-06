@@ -260,12 +260,13 @@ Downloader::getTestFileFromIndex(const QString& rootUrl, const QString& relPath,
             qDebug() << "\tERROR: can't find test file ending with " << wantedExtension;
             return;
         }
+        // TODO: loop wantedFiles until success instead of only trying first
         const QString& filename = wantedFiles.at(0);
 
-        // TODO: loop wantedFiles until success instead of only trying first
-        QNetworkRequest fileReq(QUrl(rootUrl + relPath + filename));
         QElapsedTimer latencyTimer;
         latencyTimer.start();
+
+        QNetworkRequest fileReq(QUrl(rootUrl + relPath + filename));
         auto fileReply = nam->get(fileReq);
 
         connect(fileReply, &QNetworkReply::finished, [=]
