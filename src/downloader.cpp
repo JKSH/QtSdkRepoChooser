@@ -261,28 +261,26 @@ Downloader::getTestFileFromIndex(const QString& rootUrl, const QString& relPath,
             return;
         }
         const QString& filename = wantedFiles.at(0);
-        qDebug() << "filename = " << filename;
-//        for (const QString& filename : wantedFiles)
-//        {
-            QNetworkRequest fileReq(QUrl(rootUrl + relPath + filename));
-            QElapsedTimer latencyTimer;
-            latencyTimer.start();
-            auto fileReply = nam->get(fileReq);
 
-            connect(fileReply, &QNetworkReply::finished, [=]
-            {
-                QByteArray data = fileReply->read(1024 * 1024);
-                qDebug() << "\tDownloading" << (data.size() / 1024) << " KB took" << latencyTimer.elapsed() << " ms";
-                double rate = (data.size() / 1024.0) / (latencyTimer.elapsed() / 1000.0);
-                qDebug() << "- transfer speed: " << rate << "KB/s";
-                fileReply->deleteLater();
-            });
+        // TODO: loop wantedFiles until success instead of only trying first
+        QNetworkRequest fileReq(QUrl(rootUrl + relPath + filename));
+        QElapsedTimer latencyTimer;
+        latencyTimer.start();
+        auto fileReply = nam->get(fileReq);
 
-            connect(fileReply, ( void (QNetworkReply::*)(QNetworkReply::NetworkError) )&QNetworkReply::error, [=]
-            {
-                qDebug() << "\tERROR:" << fileReply->errorString();
-            });
-//        }
+        connect(fileReply, &QNetworkReply::finished, [=]
+        {
+            QByteArray data = fileReply->read(1024 * 1024);
+            qDebug() << "\tDownloading" << (data.size() / 1024) << " KB took" << latencyTimer.elapsed() << " ms";
+            double rate = (data.size() / 1024.0) / (latencyTimer.elapsed() / 1000.0);
+            qDebug() << "- transfer speed: " << rate << "KB/s";
+            fileReply->deleteLater();
+        });
+
+        connect(fileReply, ( void (QNetworkReply::*)(QNetworkReply::NetworkError) )&QNetworkReply::error, [=]
+        {
+            qDebug() << "\tERROR:" << fileReply->errorString();
+        });
     });
 
     connect(indexReply, ( void (QNetworkReply::*)(QNetworkReply::NetworkError) )&QNetworkReply::error, [=]
