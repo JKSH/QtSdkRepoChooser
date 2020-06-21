@@ -37,6 +37,10 @@ Gui::Gui(QWidget* parent)
 		pushButton_mirror->setEnabled(false);
 		emit mirrorSelected(comboBox_os->currentText(), comboBox_mirror->currentText());
 	});
+	connect(pushButton_test, &QPushButton::clicked, [=]
+	{
+		emit mirrorTestReq(comboBox_os->currentText(), comboBox_mirror->currentText());
+	});
 }
 
 void
@@ -45,6 +49,7 @@ Gui::setMirrorList(const QStringList& mirrors)
 	comboBox_mirror->clear();
 	comboBox_mirror->addItems(mirrors);
 	pushButton_mirror->setEnabled(mirrors.count() > 0);
+	pushButton_test->setEnabled(mirrors.count() > 0);
 }
 
 void

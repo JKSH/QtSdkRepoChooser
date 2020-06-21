@@ -23,6 +23,7 @@ signals:
 
 public slots:
 	void useMirror(const QString& sdkArch, const QString& mirrorDomain);
+	void testMirrorSpeed(const QString& sdkArch, const QString& mirrorDomain);
 
 private:
 	QNetworkAccessManager* nam;
@@ -38,6 +39,7 @@ private:
 
 	void initCounters();
 	void getFilesFromIndex(const QString& rootUrl, const QString& relPath, const QStringList& wantedExtensions);
+	void getTestFileFromIndex(const QString& rootUrl, const QString& relPath, const QString& wantedExtension);
 	void recordDownload();
 };
 
