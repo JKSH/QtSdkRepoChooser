@@ -1,5 +1,10 @@
 Qt SDK Repo Chooser
 ===================
+
+## _IMPORTANT UPDATE: Unfortunately, the Qt SDK Repo Chooser is no longer usable because Qt IFW 3.0.2 [changed its internals](https://bugreports.qt.io/browse/QTIFW-441?focusedCommentId=372969&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-372969) to only use server-provided URLs._
+
+_**This project is now archived.**_
+
 If you are using the online [Qt 5 SDK](http://www.qt.io/download-open-source/) but
 downloads are slow and/or you frequently get disconnected, this tool might help.
 You might have been assigned a mirror that is performing poorly. The Qt SDK Repo
