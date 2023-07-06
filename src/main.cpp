@@ -30,6 +30,9 @@ int main(int argc, char *argv[])
 	QObject::connect(&gui, &Gui::mirrorSelected,
 			&downloader, &Downloader::useMirror);
 
+	QObject::connect(&gui, &Gui::mirrorTestReq,
+			&downloader, &Downloader::testMirrorSpeed);
+
 	QObject::connect(&downloader, &Downloader::metadataLoaded, [&gui](const QString& sdkArch, const QString& rootUrl)
 	{
 		qDebug() << "Patching Updates.xml...";

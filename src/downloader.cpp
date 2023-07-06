@@ -7,6 +7,7 @@
 #include <QNetworkReply>
 #include <QDebug>
 #include <QDir>
+#include <QElapsedTimer>
 
 Downloader::Downloader(QObject* parent)
 	: QObject(parent)
@@ -18,6 +19,8 @@ Downloader::loadMirrors()
 {
 	qDebug() << "Downloading mirror list...";
 
+    QElapsedTimer timer;
+    timer.start();
 	// ASSUMPTION: All mirrors host packages for all architectures
 	// ASSUMPTION: Updates.xml is the core file
 	QNetworkRequest req(QUrl("http://download.qt.io/online/qtsdkrepository/windows_x86/root/qt/Updates.xml.mirrorlist"));
@@ -29,6 +32,7 @@ Downloader::loadMirrors()
 		if (reply->error() != QNetworkReply::NoError)
 			return;
 
+        qDebug() << "Took" << timer.elapsed() / 1000 << "secs";
 		const QStringList mirrorGroups
 		{
 			"mirrors which handle this country", // Country-wide group
@@ -111,6 +115,33 @@ Downloader::useMirror(const QString& sdkArch, const QString& mirrorDomain)
 			{".7z", ".sha1"});
 }
 
+void
+Downloader::testMirrorSpeed(const QString& sdkArch, const QString& mirrorDomain)
+{
+    qDebug() << "Test mirror speed (" << mirrorDomain << ")";
+
+    auto rootUrl = mirrorMap[mirrorDomain];
+
+    QString subdir = "online/qtsdkrepository/" + sdkArch + "/desktop/tools_qtcreator/qt.tools.qtcreator/";
+
+    QNetworkRequest req(QUrl(rootUrl + "timestamp.txt"));
+
+    QElapsedTimer timer;
+    timer.start();
+
+    auto reply = nam->get(req);
+    connect(reply, &QNetworkReply::finished, [=]
+    {
+        qDebug() << "- latency: " << timer.elapsed() << " ms";
+    });
+    connect(reply, ( void (QNetworkReply::*)(QNetworkReply::NetworkError) )&QNetworkReply::error, [=]
+    {
+        qDebug() << "\tERROR:" << reply->errorString();
+    });
+
+    getTestFileFromIndex(rootUrl, subdir, "qtcreator_sdktool.7z");
+
+}
 
 // =======
 // PRIVATE
@@ -198,6 +229,65 @@ Downloader::getFilesFromIndex(const QString& rootUrl, const QString& relPath, co
 	{
 		qDebug() << "\tERROR:" << indexReply->errorString();
 	});
+}
+
+void
+Downloader::getTestFileFromIndex(const QString& rootUrl, const QString& relPath, const QString& wantedExtension)
+{
+    // ASSUMPTION: relPath ends with '/'
+
+    QNetworkRequest indexReq(QUrl(rootUrl + relPath));
+    QNetworkReply* indexReply = nam->get(indexReq);
+    connect(indexReply, &QNetworkReply::finished, [=]
+    {
+
+        QString page = indexReply->readAll();
+        indexReply->deleteLater();
+
+        // ASSUMPTION: There's no whitespace around the '='
+        QStringList links = page.split("a href=\"");
+        links.removeFirst();
+
+        QStringList wantedFiles;
+        for (int i = 0; i < links.size(); ++i)
+        {
+            QString link = links[i].split('"').at(0);
+            if (isWanted(link, {wantedExtension}))
+                wantedFiles << link;
+        }
+
+        if (wantedFiles.size() == 0) {
+            qDebug() << "\tERROR: can't find test file ending with " << wantedExtension;
+            return;
+        }
+        // TODO: loop wantedFiles until success instead of only trying first
+        const QString& filename = wantedFiles.at(0);
+
+        QElapsedTimer latencyTimer;
+        latencyTimer.start();
+
+        QNetworkRequest fileReq(QUrl(rootUrl + relPath + filename));
+        auto fileReply = nam->get(fileReq);
+
+        connect(fileReply, &QNetworkReply::finished, [=]
+        {
+            QByteArray data = fileReply->read(1024 * 1024);
+            qDebug() << "\tDownloading" << (data.size() / 1024) << " KB took" << latencyTimer.elapsed() << " ms";
+            double rate = (data.size() / 1024.0) / (latencyTimer.elapsed() / 1000.0);
+            qDebug() << "- transfer speed: " << rate << "KB/s";
+            fileReply->deleteLater();
+        });
+
+        connect(fileReply, ( void (QNetworkReply::*)(QNetworkReply::NetworkError) )&QNetworkReply::error, [=]
+        {
+            qDebug() << "\tERROR:" << fileReply->errorString();
+        });
+    });
+
+    connect(indexReply, ( void (QNetworkReply::*)(QNetworkReply::NetworkError) )&QNetworkReply::error, [=]
+    {
+        qDebug() << "\tERROR:" << indexReply->errorString();
+    });
 }
 
 void
